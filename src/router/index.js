@@ -1,19 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import NProgress from 'nprogress';
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Create New Employee',
+    component: () => import('../components/create-employee/CreateEmployeeComponent.vue'),
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/list-employees',
+    name: 'List All Employess',
+    component: () => import('../components/list-employee/ListEmployeeComponent.vue'),
+  },
+  {
+    path: '/edit-employees/:id',
+    name: 'Update Employess',
+    component: () => import('../components/edit-employee/EditEmployeeComponent.vue'),
   },
 ];
 
@@ -22,4 +24,16 @@ const router = createRouter({
   routes,
 });
 
+router.beforeResolve((to, from, next) => {
+  // When a page loads then use NProgress
+  if (to.name) {
+    NProgress.start();
+  }
+  next();
+});
+
+router.afterEach(() => {
+  // Complete the animation of the route using the progress bar
+  NProgress.done();
+});
 export default router;
