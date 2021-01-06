@@ -2,10 +2,10 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <h3>Add Employee</h3>
+        <h3>Add new employee</h3>
       </div>
       <div class="card-body">
-        <form v-on:submit.prevent="handleSubmitForm()">
+        <form @submit.prevent="handleSubmitForm()">
           <div class="form-group">
             <label class="font-weight-bold">Name</label>
             <input
@@ -79,12 +79,10 @@ export default {
   },
   methods: {
     handleSubmitForm() {
-
     },
   },
 };
 </script>
 
 <style>
-
 </style>

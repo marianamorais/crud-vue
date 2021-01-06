@@ -1,11 +1,12 @@
 <template>
   <div class="row justify-content-center">
-    <h1>Edit employee</h1>
+    <h1>Update employee</h1>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'EditEmployeeComponent',
   data() {
     return {
 
@@ -13,7 +14,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

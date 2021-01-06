@@ -1,4 +1,4 @@
-# crud-vue
+# front
 
 ## Project setup
 ```
