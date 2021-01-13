@@ -113,7 +113,7 @@
           <!-- /registration -->
 
           <div class="form-group">
-            <button class="btn btn-primary">
+            <button @click="submitNewEmployee" class="btn btn-primary">
               <font-awesome-icon :icon="['fas', 'user-plus']" /> Add
             </button>
           </div>
@@ -126,6 +126,7 @@
 <script>
 
 import { required } from 'vuelidate/lib/validators';
+import EmployeeService from '../../../services/EmployeeService';
 
 export default {
   components: {
@@ -135,11 +136,11 @@ export default {
   data() {
     return {
       employeeForm: {
-        name: '',
-        job_role: '',
-        salary: '',
-        birth: '',
-        registration: '',
+        name: null,
+        job_role: null,
+        salary: null,
+        birth: null,
+        registration: null,
       },
       isSubmitted: false,
     };
@@ -154,12 +155,33 @@ export default {
     },
   },
   methods: {
-    handleSubmitForm() {
-      this.isSubmitted = true;
+    handleSubmitForm() { },
+    async submitNewEmployee() {
+      try {
+        this.isSubmitted = true;
 
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        return;
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+          this.$swal('Opps!', 'You need to include all the required fields', 'error');
+          return;
+        }
+
+        await EmployeeService.createNewEmployee(this.employeeForm);
+        this.$swal({
+          title: 'Employee added successfully!',
+          icon: 'success',
+          showConfirmButton: true,
+          allowOutsideClick: false,
+          allowEnterKey: true,
+          allowEscapeKey: false,
+        // eslint-disable-next-line no-unused-vars
+        }).then((data) => {
+          this.$router.push({
+            name: 'list',
+          });
+        });
+      } catch (error) {
+        console.log(error);
       }
     },
   },
